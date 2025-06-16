@@ -29,3 +29,22 @@ flutter run --dart-define=API_URL=https://your-api-endpoint.com
 ```
 
 Use the same flag when building release artifacts, e.g. `flutter build apk`.
+
+## Continuous Integration Checks
+
+Before opening a pull request, make sure the following commands run without
+errors. These are the same checks executed in CI:
+
+```bash
+# Analyze Dart code for potential issues
+flutter analyze
+
+# Format the source code
+dart format .
+
+# Execute the test suite
+flutter test
+```
+
+Other tools can be added as the project evolves, but these commands must pass
+before your changes can be merged.
