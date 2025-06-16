@@ -3,7 +3,9 @@ import 'package:http/http.dart' as http;
 import '../models/nutrition_data.dart';
 
 class ApiService {
-  static const String baseUrl = 'http://localhost:5001';
+  /// Base URL for the backend API. Override with `--dart-define=API_BASE_URL`.
+  static const String baseUrl =
+      String.fromEnvironment('API_BASE_URL', defaultValue: 'http://localhost:5001');
 
   static Future<NutritionResult> predictNutrition(NutritionData data) async {
     try {
