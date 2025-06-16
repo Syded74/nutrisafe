@@ -1,20 +1,9 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import '../models/nutrition_data.dart';
 
 class ApiService {
-  // Use proper host when running on an Android emulator. The '10.0.2.2'
-  // address routes to the host machine from the Android emulator. Web,
-  // iOS and desktop can keep using 'localhost'.
-  static final String baseUrl = _resolveBaseUrl();
-
-  static String _resolveBaseUrl() {
-    if (kIsWeb) return 'http://localhost:5001';
-    if (Platform.isAndroid) return 'http://10.0.2.2:5001';
-    return 'http://localhost:5001';
-  }
+  static const String baseUrl = 'http://localhost:5001';
 
   static Future<NutritionResult> predictNutrition(NutritionData data) async {
     try {

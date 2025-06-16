@@ -53,16 +53,18 @@ class _ManualInputScreenState extends State<ManualInputScreen> {
 
     try {
       final nutritionData = NutritionData(
-        caloricValue: double.parse(_controllers['calories']!.text),
-        fat: double.parse(_controllers['fat']!.text),
-        saturatedFat: double.parse(_controllers['saturated_fat']!.text),
-        sugars: double.parse(_controllers['sugars']!.text),
-        sodium: double.parse(_controllers['sodium']!.text),
-        protein: double.parse(_controllers['protein']!.text),
-        vitaminA: double.parse(_controllers['vitamin_a']!.text),
-        vitaminC: double.parse(_controllers['vitamin_c']!.text),
-        iron: double.parse(_controllers['iron']!.text),
-        calcium: double.parse(_controllers['calcium']!.text),
+        caloricValue:
+            double.tryParse(_controllers['calories']!.text) ?? 0.0,
+        fat: double.tryParse(_controllers['fat']!.text) ?? 0.0,
+        saturatedFat:
+            double.tryParse(_controllers['saturated_fat']!.text) ?? 0.0,
+        sugars: double.tryParse(_controllers['sugars']!.text) ?? 0.0,
+        sodium: double.tryParse(_controllers['sodium']!.text) ?? 0.0,
+        protein: double.tryParse(_controllers['protein']!.text) ?? 0.0,
+        vitaminA: double.tryParse(_controllers['vitamin_a']!.text) ?? 0.0,
+        vitaminC: double.tryParse(_controllers['vitamin_c']!.text) ?? 0.0,
+        iron: double.tryParse(_controllers['iron']!.text) ?? 0.0,
+        calcium: double.tryParse(_controllers['calcium']!.text) ?? 0.0,
       );
 
       final result = await ApiService.predictNutrition(nutritionData);
@@ -174,12 +176,13 @@ class _ManualInputScreenState extends State<ManualInputScreen> {
           ),
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'Please enter a value';
+              return null; // allow empty input
             }
-            if (double.tryParse(value) == null) {
+            final parsed = double.tryParse(value);
+            if (parsed == null) {
               return 'Please enter a valid number';
             }
-            if (double.parse(value) < 0) {
+            if (parsed < 0) {
               return 'Value cannot be negative';
             }
             return null;
