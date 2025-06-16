@@ -185,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
     required IconData icon,
     required String title,
     required String subtitle,
-    required Color color,
+    required MaterialColor color,
     VoidCallback? onTap,
   }) {
     return Card(
@@ -201,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
+                  color: color.shade50,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
@@ -235,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Icon(
                 Icons.arrow_forward_ios,
-                color: Colors.grey[400],
+                color: color.shade700,
               ),
             ],
           ),
