@@ -1,32 +1,22 @@
 import 'dart:io';
+
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+
 import '../models/nutrition_data.dart';
 
 class OcrService {
-  // Placeholder for Google ML Kit OCR integration
+  /// Extracts all text from the given [imageFile] using Google ML Kit's
+  /// [TextRecognizer].
   static Future<String> extractTextFromImage(File imageFile) async {
-    // TODO: Implement Google ML Kit Text Recognition
-    // This is where you'll integrate:
-    // - google_mlkit_text_recognition package
-    // - Process the image file
-    // - Extract text from nutrition labels
+    final inputImage = InputImage.fromFile(imageFile);
+    final textRecognizer = TextRecognizer(
+      script: TextRecognitionScript.latin,
+    );
 
-    await Future.delayed(const Duration(seconds: 1)); // Simulate processing
+    final recognizedText = await textRecognizer.processImage(inputImage);
+    await textRecognizer.close();
 
-    // Return mock extracted text for now
-    return '''
-    Nutrition Facts
-    Per 100g
-    Energy: 250 kcal
-    Fat: 12g
-    Saturated Fat: 3g
-    Sugars: 15g
-    Sodium: 0.5g
-    Protein: 8g
-    Vitamin A: 20μg
-    Vitamin C: 10mg
-    Iron: 2mg
-    Calcium: 100mg
-    ''';
+    return recognizedText.text;
   }
 
   static NutritionData? parseNutritionText(String text) {

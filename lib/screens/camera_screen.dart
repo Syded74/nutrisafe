@@ -1,5 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
+import '../services/api_service.dart';
+import '../services/ocr_service.dart';
 import 'manual_input_screen.dart';
+import 'result_screen.dart';
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});
@@ -10,46 +17,48 @@ class CameraScreen extends StatefulWidget {
 
 class _CameraScreenState extends State<CameraScreen> {
   bool _isProcessing = false;
+  final ImagePicker _picker = ImagePicker();
 
-  // Placeholder for OCR functionality
   Future<void> _captureAndProcess() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    if (pickedFile == null) return;
+
     setState(() => _isProcessing = true);
 
-    // Simulate OCR processing
-    await Future.delayed(const Duration(seconds: 2));
+    final imageFile = File(pickedFile.path);
 
-    setState(() => _isProcessing = false);
+    final nutritionData = await OcrService.processImage(imageFile);
 
-    // Show message about OCR implementation
-    if (mounted) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('OCR Feature'),
-          content: const Text(
-            'OCR functionality is ready to be implemented with Google ML Kit. '
-                'For now, you can use manual input to test the nutrition analysis.',
+    if (nutritionData == null) {
+      if (mounted) {
+        setState(() => _isProcessing = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Could not read nutrition values.')),
+        );
+      }
+      return;
+    }
+
+    try {
+      final result = await ApiService.predictNutrition(nutritionData);
+      if (mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ResultScreen(result: result),
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context); // Close dialog
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ManualInputScreen(),
-                  ),
-                );
-              },
-              child: const Text('Manual Input'),
-            ),
-          ],
-        ),
-      );
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: ${e.toString()}')),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isProcessing = false);
+      }
     }
   }
 
