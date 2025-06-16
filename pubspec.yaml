@@ -1,0 +1,25 @@
+name: nutrisafe
+description: "NutriSafe MVP"
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  image_picker: ^1.0.4
+  http: ^0.13.5
+  google_mlkit_text_recognition: ^0.13.0  # Updated to latest version
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+
+flutter:
+  uses-material-design: true
