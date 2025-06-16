@@ -19,10 +19,9 @@ samples, guidance on mobile development, and a full API reference.
 
 The application communicates with a backend API defined by the `API_URL`
 environment variable. If no value is provided, it defaults to
-`http://localhost:5001`.
+`https://web-production-0fba.up.railway.app/`.
 
-When running the app you can override this value using Flutter's
-`--dart-define` option:
+You can override this value when running or building the app using Flutter's `--dart-define` option:
 
 ```bash
 flutter run --dart-define=API_URL=https://your-api-endpoint.com
