@@ -3,7 +3,9 @@ import 'package:http/http.dart' as http;
 import '../models/nutrition_data.dart';
 
 class ApiService {
-  static const String baseUrl = 'http://localhost:5001';
+  // Base URL for the deployed Flask API
+  static const String baseUrl =
+      'https://web-production-0fba.up.railway.app';
 
   static Future<NutritionResult> predictNutrition(NutritionData data) async {
     try {
