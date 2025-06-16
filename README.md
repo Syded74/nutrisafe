@@ -29,3 +29,8 @@ flutter run --dart-define=API_URL=https://your-api-endpoint.com
 ```
 
 Use the same flag when building release artifacts, e.g. `flutter build apk`.
+
+## Disclaimer
+
+Nutritional predictions produced by this application are for informational purposes only and do not constitute professional medical advice. The AI models behind these predictions may not be perfectly accurate.
+
