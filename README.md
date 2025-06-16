@@ -29,3 +29,8 @@ flutter run --dart-define=API_URL=https://your-api-endpoint.com
 ```
 
 Use the same flag when building release artifacts, e.g. `flutter build apk`.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for
+details.
