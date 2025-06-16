@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 import '../models/nutrition_data.dart';
@@ -96,7 +97,7 @@ class OcrService {
         );
       }
     } catch (e) {
-      print('Error parsing nutrition text: $e');
+      debugPrint('Error parsing nutrition text: $e');
     }
 
     return null;
@@ -112,7 +113,7 @@ class OcrService {
 
       return nutritionData;
     } catch (e) {
-      print('Error processing image: $e');
+      debugPrint('Error processing image: $e');
       return null;
     }
   }
