@@ -4,7 +4,9 @@ import '../models/nutrition_data.dart';
 import '../config.dart';
 
 class ApiService {
-  static const String baseUrl = AppConfig.apiBaseUrl;
+  /// Base URL for all API requests without trailing slashes.
+
+  static final String baseUrl = AppConfig.apiBaseUrl.replaceAll(RegExp(r'/+$'), '');
 
   static Future<NutritionResult> predictNutrition(NutritionData data) async {
     try {
