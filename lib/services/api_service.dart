@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/nutrition_data.dart';
+import '../config.dart';
 
 class ApiService {
-  static const String baseUrl = 'https://web-production-0fba.up.railway.app/';
+  static const String baseUrl = AppConfig.apiBaseUrl;
 
   static Future<NutritionResult> predictNutrition(NutritionData data) async {
     try {

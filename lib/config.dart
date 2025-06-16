@@ -1,6 +1,6 @@
 class AppConfig {
   static const String apiBaseUrl = String.fromEnvironment(
     'API_URL',
-    defaultValue: 'http://localhost:5001',
+    defaultValue: 'https://web-production-0fba.up.railway.app/',
   );
 }
