@@ -1,6 +1,13 @@
 # nutrisafe
 
-A new Flutter project.
+A Flutter application for analyzing nutrition labels using a local Flask API.
+
+## API Connection
+
+The app expects the NutriSafe API to be running locally on port `5001`. When
+running on an Android emulator the host machine is reachable via `10.0.2.2`.
+Other platforms can use `localhost` directly. The `ApiService` class resolves
+this automatically.
 
 ## Getting Started
 
