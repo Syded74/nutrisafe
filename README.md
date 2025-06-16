@@ -1,13 +1,6 @@
 # nutrisafe
 
-A Flutter application for analyzing nutrition labels using a local Flask API.
-
-## API Connection
-
-The app expects the NutriSafe API to be running locally on port `5001`. When
-running on an Android emulator the host machine is reachable via `10.0.2.2`.
-Other platforms can use `localhost` directly. The `ApiService` class resolves
-this automatically.
+A new Flutter project.
 
 ## Getting Started
 
@@ -21,21 +14,3 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
-
-## Configuring the API endpoint
-
-The app communicates with a Flask backend. By default the base URL is
-`http://localhost:5001`. You can override this when building or running the
-app by setting the `API_BASE_URL` compile-time variable:
-
-```bash
-flutter run --dart-define=API_BASE_URL=https://your-server.com
-```
-
-or when building a release:
-
-```bash
-flutter build apk --dart-define=API_BASE_URL=https://your-server.com
-```
-
-If no value is provided, the app falls back to `http://localhost:5001`.
