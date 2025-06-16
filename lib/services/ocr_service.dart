@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:developer';
 
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
@@ -20,64 +21,49 @@ class OcrService {
   }
 
   static NutritionData? parseNutritionText(String text) {
-    // Simple text parsing logic
-    // TODO: Implement more robust parsing with regex
+    // Uses regular expressions to extract numeric values for common nutrients.
+
+    double? _parseValue(String line, List<String> labels) {
+      final joined = labels.map(RegExp.escape).join("|");
+      final regex = RegExp("(?:" + joined + ")[^0-9]*(\\d+(?:\\.\\d+)?)", caseSensitive: false);
+      final match = regex.firstMatch(line);
+      return match != null ? double.tryParse(match.group(1)!) : null;
+    }
 
     try {
       final lines = text.toLowerCase().split('\n');
       final values = <String, double>{};
 
       for (final line in lines) {
-        // Parse common nutrition label formats
-        if (line.contains('energy') || line.contains('calories')) {
-          final match = RegExp(r'(\d+(?:\.\d+)?)').firstMatch(line);
-          if (match != null) values['calories'] = double.parse(match.group(1)!);
-        }
+        final calories = _parseValue(line, ["energy", "calories", "kcal"]);
+        if (calories != null) values["calories"] = calories;
 
-        if (line.contains('fat') && !line.contains('saturated')) {
-          final match = RegExp(r'(\d+(?:\.\d+)?)').firstMatch(line);
-          if (match != null) values['fat'] = double.parse(match.group(1)!);
-        }
+        final fat = _parseValue(line, ["fat"]);
+        if (fat != null && !line.contains("saturated")) values["fat"] = fat;
 
-        if (line.contains('saturated')) {
-          final match = RegExp(r'(\d+(?:\.\d+)?)').firstMatch(line);
-          if (match != null) values['saturated_fat'] = double.parse(match.group(1)!);
-        }
+        final saturated = _parseValue(line, ["saturated"]);
+        if (saturated != null) values["saturated_fat"] = saturated;
 
-        if (line.contains('sugar')) {
-          final match = RegExp(r'(\d+(?:\.\d+)?)').firstMatch(line);
-          if (match != null) values['sugars'] = double.parse(match.group(1)!);
-        }
+        final sugar = _parseValue(line, ["sugar"]);
+        if (sugar != null) values["sugars"] = sugar;
 
-        if (line.contains('sodium')) {
-          final match = RegExp(r'(\d+(?:\.\d+)?)').firstMatch(line);
-          if (match != null) values['sodium'] = double.parse(match.group(1)!);
-        }
+        final sodium = _parseValue(line, ["sodium", "salt"]);
+        if (sodium != null) values["sodium"] = sodium;
 
-        if (line.contains('protein')) {
-          final match = RegExp(r'(\d+(?:\.\d+)?)').firstMatch(line);
-          if (match != null) values['protein'] = double.parse(match.group(1)!);
-        }
+        final protein = _parseValue(line, ["protein"]);
+        if (protein != null) values["protein"] = protein;
 
-        if (line.contains('vitamin a')) {
-          final match = RegExp(r'(\d+(?:\.\d+)?)').firstMatch(line);
-          if (match != null) values['vitamin_a'] = double.parse(match.group(1)!);
-        }
+        final vitaminA = _parseValue(line, ["vitamin a"]);
+        if (vitaminA != null) values["vitamin_a"] = vitaminA;
 
-        if (line.contains('vitamin c')) {
-          final match = RegExp(r'(\d+(?:\.\d+)?)').firstMatch(line);
-          if (match != null) values['vitamin_c'] = double.parse(match.group(1)!);
-        }
+        final vitaminC = _parseValue(line, ["vitamin c"]);
+        if (vitaminC != null) values["vitamin_c"] = vitaminC;
 
-        if (line.contains('iron')) {
-          final match = RegExp(r'(\d+(?:\.\d+)?)').firstMatch(line);
-          if (match != null) values['iron'] = double.parse(match.group(1)!);
-        }
+        final iron = _parseValue(line, ["iron"]);
+        if (iron != null) values["iron"] = iron;
 
-        if (line.contains('calcium')) {
-          final match = RegExp(r'(\d+(?:\.\d+)?)').firstMatch(line);
-          if (match != null) values['calcium'] = double.parse(match.group(1)!);
-        }
+        final calcium = _parseValue(line, ["calcium"]);
+        if (calcium != null) values["calcium"] = calcium;
       }
 
       // Return parsed data if we have enough values
@@ -96,7 +82,7 @@ class OcrService {
         );
       }
     } catch (e) {
-      print('Error parsing nutrition text: $e');
+      log('Error parsing nutrition text: $e');
     }
 
     return null;
@@ -112,7 +98,7 @@ class OcrService {
 
       return nutritionData;
     } catch (e) {
-      print('Error processing image: $e');
+      log('Error processing image: $e');
       return null;
     }
   }
