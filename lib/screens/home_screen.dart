@@ -44,7 +44,14 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.green.shade50,
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.green.shade100,
+                    Colors.green.shade50,
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Column(
@@ -58,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     'Nutrition Safety Scanner',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: Colors.green.shade800,
                     ),
@@ -188,14 +195,16 @@ class _HomeScreenState extends State<HomeScreen> {
     required Color color,
     VoidCallback? onTap,
   }) {
-    return Card(
-      elevation: 3,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(15),
-        child: Container(
-          padding: const EdgeInsets.all(20),
+    return Opacity(
+      opacity: onTap == null ? 0.5 : 1.0,
+      child: Card(
+        elevation: 3,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(15),
+          child: Container(
+            padding: const EdgeInsets.all(20),
           child: Row(
             children: [
               Container(

@@ -1,16 +1,36 @@
-# nutrisafe
+# NutriSafe
 
-A new Flutter project.
+NutriSafe is an AI‑powered nutrition profiling app built for the UNICEF
+Innovation Lab. The goal is to help Ghanaian families quickly assess the
+nutritional safety of grocery products. The mobile app scans or manually
+captures nutrition facts, sends the information to a backend XGBoost model,
+and displays an easy‑to‑understand health rating.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+1. **Clone the repository**
 
-A few resources to get you started if this is your first Flutter project:
+   ```bash
+   git clone <this repo>
+   cd nutrisafe
+   ```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+2. **Install Flutter** (see the [Flutter docs](https://docs.flutter.dev/)) and
+   run the app:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+   ```bash
+   flutter pub get
+   flutter run
+   ```
+
+3. **Backend API**
+
+   The mobile app expects a Flask API running at `http://localhost:5001` by
+   default. Start the backend with:
+
+   ```bash
+   python app.py
+   ```
+
+   Adjust the `baseUrl` in `lib/services/api_service.dart` if your API runs on a
+   different address.

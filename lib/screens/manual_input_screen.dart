@@ -165,7 +165,7 @@ class _ManualInputScreenState extends State<ManualInputScreen> {
         padding: const EdgeInsets.only(bottom: 15),
         child: TextFormField(
           controller: entry.value,
-          keyboardType: TextInputType.number,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
           decoration: InputDecoration(
             labelText: _labels[entry.key],
             border: const OutlineInputBorder(),
