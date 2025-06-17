@@ -8,9 +8,13 @@ class ApiService {
 
   static final String baseUrl = AppConfig.apiBaseUrl.replaceAll(RegExp(r'/+$'), '');
 
-  static Future<NutritionResult> predictNutrition(NutritionData data) async {
+  static Future<NutritionResult> predictNutrition(
+    NutritionData data, {
+    http.Client? client,
+  }) async {
     try {
-      final response = await http.post(
+      final post = client?.post ?? http.post;
+      final response = await post(
         Uri.parse('$baseUrl/predict'),
         headers: {
           'Content-Type': 'application/json',
@@ -22,7 +26,12 @@ class ApiService {
         final jsonData = jsonDecode(response.body);
         return NutritionResult.fromJson(jsonData);
       } else {
-        throw Exception('API Error: ${response.statusCode}');
+        final body = jsonDecode(response.body);
+        final parts = ['API Error: ${response.statusCode}'];
+        if (body is Map && body['detail'] != null) {
+          parts.add(body['detail']);
+        }
+        throw Exception(parts.join(' - '));
       }
     } catch (e) {
       throw Exception('Network Error: $e');
