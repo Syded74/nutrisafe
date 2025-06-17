@@ -18,8 +18,9 @@ samples, guidance on mobile development, and a full API reference.
 ## API Configuration
 
 The application communicates with a backend API defined by the `API_URL`
-environment variable. If no value is provided, it defaults to
-`https://web-production-0fba.up.railway.app/`.
+environment variable. The value can be supplied at build time with
+`--dart-define` or as a runtime environment variable. If neither is provided,
+it defaults to `https://web-production-0fba.up.railway.app/`.
 
 When running the app you can override this value using Flutter's
 `--dart-define` option:

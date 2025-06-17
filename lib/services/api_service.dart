@@ -5,8 +5,7 @@ import '../config.dart';
 
 class ApiService {
   /// Base URL for all API requests without trailing slashes.
-
-  static final String baseUrl = AppConfig.apiBaseUrl.replaceAll(RegExp(r'/+$'), '');
+  static final String baseUrl = AppConfig.apiBaseUrl;
 
   static Future<NutritionResult> predictNutrition(
     NutritionData data, {
